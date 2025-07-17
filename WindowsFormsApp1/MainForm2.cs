@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,6 +30,7 @@ namespace TCPLogCollector
         // Auto-save related fields
         private bool autoSaveEnabled = true;
         private string autoSaveFileName;
+        private string autoSaveFilePath;
         private StreamWriter autoSaveWriter;
         private int autoSaveInterval = 1; // Save every X logs
         private int logCountSinceLastSave = 0;
@@ -472,6 +473,7 @@ namespace TCPLogCollector
                 try
                 {
                     savePath = saveLocationTextBox.Text;
+                    autoSaveFileName = autoSaveFileNameTextBox.Text;
                     if (!Directory.Exists(savePath))
                     {
                         Directory.CreateDirectory(savePath);
@@ -739,7 +741,7 @@ namespace TCPLogCollector
         private void InitializeAutoSave(string fileName)
         {
             // Construct the complete file name based on the current date and time
-            autoSaveFileName = Path.Combine(savePath, $"{fileName}_{DateTime.Now:yyyyMMdd_HHmmss}{GetFileExtension(selectedFormat)}");
+            autoSaveFilePath = Path.Combine(savePath, $"{fileName}_{DateTime.Now:yyyyMMdd_HHmmss}{GetFileExtension(selectedFormat)}");
 
             try
             {
@@ -747,7 +749,7 @@ namespace TCPLogCollector
                 Directory.CreateDirectory(savePath);
 
                 // Create the file and the stream writer
-                autoSaveWriter = new StreamWriter(autoSaveFileName, true); // 'true' for appending
+                autoSaveWriter = new StreamWriter(autoSaveFilePath, true); // 'true' for appending
                 autoSaveWriter.AutoFlush = true; // Ensure data is written immediately
             }
             catch (Exception ex)
@@ -777,7 +779,7 @@ namespace TCPLogCollector
                 try
                 {
                     // Get the file info
-                    FileInfo fileInfo = new FileInfo(autoSaveFileName);
+                    FileInfo fileInfo = new FileInfo(autoSaveFilePath);
 
                     // Check if the file exists and has reached its maximum size
                     if (fileInfo.Exists && fileInfo.Length > maxLogFileSize * 1024 * 1024)
