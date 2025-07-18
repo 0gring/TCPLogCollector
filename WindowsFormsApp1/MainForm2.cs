@@ -1,21 +1,3 @@
-
-Conversation opened. 1 read message.
-
-Skip to content
-Using Gmail with screen readers
-10 of 2,984
-קוד "מתוקן"‎
-Inbox
-Yonatan Doron
-	
-AttachmentsMon, Jul 14, 3:45 PM (4 days ago)
-	
-to me
-
- One attachment  •  Scanned by Gmail
-	
-
-﻿
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -887,6 +869,3 @@ namespace TCPLogCollector
         public string Message { get; set; }
     }
 }
-
-MainForm2.cs
-Displaying MainForm2.cs.
